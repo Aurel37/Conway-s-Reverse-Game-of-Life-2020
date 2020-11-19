@@ -13,7 +13,7 @@ class grid:
         self.col = ['red', 'green']
 
     def initialization(self, matrix):
-        if matrix.shape() == [self.n, self.p]:
+        if matrix.shape == (self.n, self.p):
             self.mat = np.copy(matrix)
 
     def setCell(self, i, j):
@@ -58,13 +58,13 @@ class grid:
                 ax.add_artist(a_circle)
 
 
-    def showGame(self, time):
+    def showGame(self, time,  step):
 
         fig, ax = plt.subplots()
         ax.set(xlim=(0, self.n), ylim = (0, self.p))
         self.printGrid(ax)
         for _ in range(time):
-            plt.pause(0.5)
+            plt.pause(step)
             self.oneStep()
             self.printGrid(ax)
 
@@ -76,7 +76,20 @@ class grid:
 
 
 
-test = grid(5, 5)
+test = grid(10, 10)
+test1 = np.array([[0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+                [0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                ])
+print(test1.shape)
+test.initialization(test1)
 
-test.setRandom()
-test.showGame(10)
+# test.setRandom()
+test.showGame(10, 1)
