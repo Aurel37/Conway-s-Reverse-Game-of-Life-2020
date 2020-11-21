@@ -2,14 +2,17 @@ import numpy as np
 import random as rd
 from time import sleep
 import matplotlib.pyplot as plt
-
-
+from matplotlib.animation import FuncAnimation
+from utils.dataLoader import dataLoad
 
 class grid:
-    def __init__(self, n, p):
+    def __init__(self, n, p, mat=np.zeros((0,0))):
         self.n = n
         self.p = p
-        self.mat = np.zeros((n, p))
+        if (mat.shape != (0,0)):
+            self.mat = mat
+        else:
+            self.mat = np.zeros((n, p))
         self.col = ['red', 'green']
 
     def initialization(self, matrix):
@@ -58,8 +61,7 @@ class grid:
                 ax.add_artist(a_circle)
 
 
-    def showGame(self, time,  step):
-
+    def showGame(self, time, step):
         fig, ax = plt.subplots()
         ax.set(xlim=(0, self.n), ylim = (0, self.p))
         self.printGrid(ax)
@@ -68,28 +70,17 @@ class grid:
             self.oneStep()
             self.printGrid(ax)
 
+    #Don't work yet, but useful to print a graph in jupyter
+    #def showGameMatplot(self, time, step):
+    #    fig = plt.subplots()
+    #    FuncAnimation(fig, self.showGame, time)
 
     def game(self, time):
         for _ in range(time):
             self.oneStep()
             print(self.mat)
 
-
-
-test = grid(10, 10)
-test1 = np.array([[0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-                [0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                ])
-print(test1.shape)
-test.initialization(test1)
-
-# test.setRandom()
-test.showGame(10, 1)
+if __name__ == "__main__":
+    test = dataLoad('train.csv', ["delta", 'id'])
+    testGrid = grid(25, 25, test[0][0])
+    testGrid.showGame(20, 0.01) 
