@@ -10,7 +10,7 @@ def open_csv(path, cols):
 def convertToNumpy(data):
     col_start = ['start_' + str(i) for i in range(625)]
     col_stop = ['stop_' + str(i) for i in range(625)]
-    return (data[col_start].to_numpy().T, data[col_stop].to_numpy().T)
+    return (data[col_start].to_numpy().T, data[col_stop].to_numpy().T, data['delta'].to_numpy().T)
 
 def convertArray(array, n=25, m=25):
     res = np.zeros((n, m))
@@ -31,10 +31,11 @@ def dataLoad(path, cols, n=25, m=25):
     arrays = convertToNumpy(data)
     p = arrays[0].shape[0]
     q = arrays[1].shape[0]
+    deltas = arrays[2]
     resStart = np.zeros((p, n, m))
     resStop = np.zeros((q, n, m))
     for i in range(p):
         resStart[i] = convertArray(arrays[0][i], n, m)
     for i in range(p):
         resStop[i] = convertArray(arrays[1][i], n, m)
-    return (resStart, resStop)
+    return (resStart, resStop, deltas)
